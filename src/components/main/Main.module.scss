@@ -1,0 +1,90 @@
+@import './../../appVariables';
+
+.main {
+	padding: 50px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	border-top: 5px solid $primaryColor;
+
+	.welcome {
+		font-weight: 800;
+        font-size: 50px;
+        margin-bottom: 50px;
+
+		.green {
+			color: $primaryColor;
+			background: linear-gradient(46deg, $primaryColor, $secondaryColor);
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+    }
+    
+	.login {
+		.row {
+            display: flex;
+            align-items: center;
+
+            span {
+                margin: 0 30px;
+            }
+		}
+    }
+    
+    .account {
+        display: grid;
+        justify-items: center;
+
+        img {
+            display: block;
+            border-radius: 50px;
+            box-sizing: border-box;
+            // border: 1px solid $primaryColor;
+            height: 75px;
+            width: 75px;
+        }
+
+        span {
+            display: block;
+        }
+
+        .enter {
+			padding: 5px 15px;
+			font-size: 16px;
+			border-radius: 2px;
+			border: none;
+			margin: 5px 0;
+			background: $primaryColor;
+			color: whitesmoke;
+			height: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+
+			&:hover {
+                transition: 0.2s;
+				box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.205);
+			}
+        }
+
+        .logOut {
+			padding: 5px 15px;
+			font-size: 16px;
+			border-radius: 2px;
+			border: none;
+			margin: 5px 0;
+			background: $secondaryColor;
+			color: whitesmoke;
+			height: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+
+			&:hover {
+                transition: 0.2s;
+				box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.205);
+			}
+        }
+    }
+}

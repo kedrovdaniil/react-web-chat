@@ -1,0 +1,42 @@
+@import "./../../../appVariables";
+
+.wrapper {
+	display: grid;
+	background: $primaryColor;
+	padding: 25px 30px;
+	border-radius: 20px;
+
+	form {
+		display: grid;
+
+		input {
+			padding: 5px 8px;
+			font-size: 16px;
+			border-radius: 2px;
+			border: none;
+			margin: 5px 0;
+		}
+
+		button {
+			padding: 5px 8px;
+			font-size: 16px;
+			border-radius: 2px;
+			border: none;
+			margin: 5px 0;
+			background: $secondaryColor;
+			color: whitesmoke;
+			height: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+
+			&:hover {
+                transition: 0.2s;
+				box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.205);
+			}
+		}
+	}
+
+	span {
+		color: whitesmoke;
+	}
+}

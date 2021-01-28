@@ -1,0 +1,28 @@
+@import './../../../../appVariables.scss';
+
+.message {
+    background: white;
+    // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
+    border-radius: $messagesBorderRaduis;
+    margin-top: 10px;
+    margin: 5px 15px;
+    box-sizing: border-box;
+    border: 1px solid rgb(218, 218, 218);
+    align-self: flex-start;
+    width: fit-content;
+}
+
+.myMessage {
+    background: $secondaryColor;
+    // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+    padding: 10px 15px;
+    border-radius: $messagesBorderRaduis;
+    margin-top: 10px;
+    margin: 5px 15px;
+    box-sizing: border-box;
+    border: 1px solid #3a1871;
+    align-self: flex-end;
+    width: fit-content;
+    color: whitesmoke;
+}

@@ -1,0 +1,102 @@
+@import "./../../appVariables.scss";
+
+.messengerWrapper {
+	margin: 10px;
+	background: #eafdfb;
+	height: calc(100vh - 20px);
+	display: grid;
+	grid-template-columns: 300px 1fr;
+	grid-template-areas: "head head" "rooms chat";
+	border-radius: 10px;
+	// overflow: hidden;
+	// border: 1px solid $borderColor;
+	grid-template-rows: 75px;
+	box-sizing: border-box;
+
+	.head {
+		grid-area: head;
+		// grid-column-start: 1;
+		// grid-column-end: 3;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 15px;
+		background: $primaryColor;
+		height: 75px;
+		border-radius: 10px 10px 0 0;
+
+		.accountWrapper {
+            display: flex;
+			align-items: center;
+			user-select: none;
+
+			img {
+				height: 50px;
+				width: 50px;
+				border-radius: 50%;
+				box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75);
+				pointer-events: none;
+			}
+
+			.noAvatar {
+				height: 50px;
+				width: 50px;
+				border-radius: 50%;
+				background: rgb(190, 190, 190);
+			}
+
+			.account {
+				margin-left: 15px;
+				color: whitesmoke;
+				font-weight: 600;
+			}
+		}
+
+		.backBtn {
+			display: block;
+			padding: 10px 15px;
+			border: 1px solid $borderColor;
+			border-radius: 2px;
+			color: $borderColor;
+            text-decoration: none;
+            transition: 0.3s;
+            
+            &:hover {
+                background: $borderColor;
+                color: black;
+                transition: 0.3s;
+            }
+		}
+	}
+
+	.rooms {
+		grid-area: rooms;
+		box-sizing: border-box;
+		border: 1px solid $borderColor;
+		border-top: none;
+		border-bottom-left-radius: 10px;
+		overflow: hidden;
+		position: relative;
+	}
+
+	.chat {
+		grid-area: chat;
+		box-sizing: border-box;
+		border: 1px solid $borderColor;
+		border-top: none;
+		border-left: none;
+		border-bottom-right-radius: 10px;
+	}
+
+	.textCenter {
+		// height: 100%;
+		// width: 100%;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		// justify-items: center;
+		align-items: center;
+		// border: 1px solid greenyellow;
+		height: 100%;
+	}
+}

@@ -1,0 +1,45 @@
+@import './../../../../appVariables.scss';
+
+.chat {
+    padding: 10px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border-bottom: 1px solid $borderColor;
+    transition: 0.1s;
+    cursor: pointer;
+    user-select: none;
+    
+    span {
+        color: rgb(46, 46, 46);
+        margin-left: 10px;
+        pointer-events: none;
+    }
+
+    img { 
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border: 1px solid white;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    &:hover {
+        background: $borderColor;
+        transition: 0.3s;
+    }
+}
+
+.chatActive {
+    background: $secondaryColor;
+    border-bottom: 1px solid $secondaryColor;
+    
+    span {
+        color: whitesmoke;
+    }
+
+    &:hover {
+        background: $secondaryColor;
+    }
+}
