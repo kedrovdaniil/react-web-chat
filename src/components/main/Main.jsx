@@ -5,7 +5,7 @@ import RegistrationForm from "./registration/RegistrationForm"
 import LoginForm from "./login/LoginForm"
 import { useHistory } from "react-router-dom"
 import Loader from '../loader/Loader';
-import { StoreContext } from './../../store/store';
+import { StoreContext } from '../../contexts/StoreProvider';
 
 const Main = () => {
 	const { state, setState } = useContext(StoreContext)

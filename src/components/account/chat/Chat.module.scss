@@ -1,4 +1,4 @@
-@import './../../../appVariables.scss';
+@import "./../../../appVariables.scss";
 
 .chat {
 	// height: 100%;
@@ -23,6 +23,20 @@
 		background: rgb(218, 243, 235);
 		color: rgb(46, 46, 46);
 		padding: 5px;
+
+		.loader {
+			// width: max-content;
+			// background: whitesmoke;
+			// border: 1px solid red;
+			display: flex;
+			align-items: center;
+			margin-right: 5px;
+				
+			img {
+				height: 18px;
+				width: 18px;
+			}
+		}
 	}
 
 	// .messagesWrapper { // chat-message-list
@@ -44,7 +58,6 @@
 		// box-sizing: border-box;
 		// margin-bottom: 20px;
 
-		
 		// height: 75vh;
 		overflow-y: scroll;
 		overflow-x: hidden;
@@ -58,11 +71,16 @@
 		scrollbar-color: $primaryColor #dfdfdf;
 
 		// display: grid;
+		// grid-auto-flow: dense;
 		// grid-template-columns: repeat(4fr);
 		display: flex;
 		flex-direction: column-reverse;
+
+		.messagesDiv {
+			display: flex;
+			flex-direction: column-reverse;
+			position: relative;
+		}
 	}
 	// }
-
-	
 }

@@ -1,66 +1,23 @@
 import React from 'react';
-import { useContext, useState, useEffect, memo } from 'react';
-import { StoreContext } from './../../../store/store';
+import { useContext, useState, useEffect, memo, useCallback } from 'react';
+import { StoreContext } from '../../../contexts/StoreProvider';
 import Echo from 'laravel-echo';
 import { ChatsAPI } from '../../../api/api';
 import Chat from './Chat';
+import { ChatsContext } from '../../../contexts/ChatsProvider';
 
 const ChatC = memo(({ chatId, rooms }) => {
 
     const { state, setState } = useContext(StoreContext)
+    const { chatsState, setNewMessage } = useContext(ChatsContext)
 
-    const [isDownloading, setisDownloading] = useState(false)
-    const [messages, setMessages] = useState(null)
-
-    // // connect to broadcast channel
-    // window.io = require("socket.io-client")
-
-    // window.Echo = new Echo({
-    //     broadcaster: 'socket.io',
-    //     host: window.location.hostname + ':6001', // this is laravel-echo-server host
-    //     authEndpoint: "/api/broadcasting/auth"
-    // });
-
-    useEffect(() => {
-        // receive data
-        const receiveMessages = async () => {
-            setisDownloading(true)
-            const r = await ChatsAPI.chat(chatId)
-            if (r) {
-                setMessages(r.data)
-                // setState({ ...state, messages: r.data })
-                // console.log('state', state)
-                setisDownloading(false)
-            }
-        }
-        if (chatId) receiveMessages()
-    }, [])
-
-    useEffect(() => {
-        // // connect to sockets    
-        if (chatId) {
-            // window.Echo.channel(`chat.${chatId}`)
-            //     .listen('.NewMessage', (e) => {
-            //         console.log('NewMessage Event', e, e.message)
-            //         console.log('current messages', messages)
-            //         // console.log('NewSetState before spreas:', [...state.messages])
-            //         // const newMessagesState = [e.message, ...messages]
-            //         // console.log('NewSetState after:', newMessagesState)
-            //         setMessages(messages => [e.message, ...messages])
-            //         // setState({ ...state, messages: newMessagesState })
-
-            //     })
-            // console.log(`Новое подключение к каналу ${chatId}`)
-        }
-
-        return () => {
-            window.Echo.leave(`chat.${chatId}`)
-            // console.log(`Отключение от канала ${chatId}`)
-        }
-    }, [chatId, setMessages])
+    const messages = chatsState.rooms.find(room => room.id === chatId)?.messages?.data ?? []
 
     // add new message
-    const setNewMessage = (message) => {
+    const addNewMessage = (message) => {
+
+        console.log('message', message)
+
         const newMessage = {
             id: Date.now(),
             chat_id: chatId,
@@ -69,8 +26,8 @@ const ChatC = memo(({ chatId, rooms }) => {
             created_at: Date.now(),
             updated_at: Date.now(),
         }
-        console.log('messages on set |', 'messages:',messages, '[...messages, newMessage]:', [...messages, newMessage])
-        setMessages(messages => ([newMessage, ...messages]))
+
+        setNewMessage(newMessage, chatId, true)
     }
 
     // chat name
@@ -78,10 +35,16 @@ const ChatC = memo(({ chatId, rooms }) => {
     const roomName = room.name
     const chatName = roomName ? roomName : room.countOfMembers === 2 ? `Чат с ${room.members.filter(m => m.id != state.user_id)[0].name}` : "Чат без названия"
 
+    // is public
+    const isPublic = room.countOfMembers > 2
+
+    // is loading
+    // console.log('isLoadingActive room.messages', room.messages)
+    const isLoadingActive = room.messages.isLoaderActive
 
     return (
         <>
-            <Chat chatName={chatName} messages={messages} isDownloading={isDownloading} chatId={chatId} setNewMessage={setNewMessage} userId={state.user_id} />
+            <Chat isPublic={isPublic} chatName={chatName} messages={messages} isLoadingActive={isLoadingActive} chatId={chatId} addNewMessage={addNewMessage} userId={state.user_id} />
         </>
     );
 })

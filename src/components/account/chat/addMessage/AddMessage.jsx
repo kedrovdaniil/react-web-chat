@@ -3,7 +3,7 @@ import s from './AddMessage.module.scss'
 import { useState } from 'react';
 import { ChatAPI } from './../../../../api/api';
 
-const AddMessage = ({chatId, setNewMessage}) => {
+const AddMessage = ({chatId, addNewMessage}) => {
 
     const [message, setMessage] = useState('')
 
@@ -14,13 +14,13 @@ const AddMessage = ({chatId, setNewMessage}) => {
 
     const submitHandler = async (e) => {
         e.preventDefault()
-        console.log('Submit', message)
+        // console.log('Submit', message)
         const status = await ChatAPI.newMessage(chatId, message)
         if (status === 200) {
-            setNewMessage(message)
+            addNewMessage(message)
             setMessage("")
         }
-        console.log('Response status', status)
+        // console.log('Response status', status)
     }
 
     // console.log(message)

@@ -1,28 +1,30 @@
 import React from 'react';
 import s from './Rooms.module.scss'
 import Room from './room/Room';
-import { StoreContext } from './../../../store/store';
+import { ChatsContext } from '../../../contexts/ChatsProvider';
+import { useContext } from 'react';
 
 const Rooms = ({ activeRoom, rooms, setActiveRoom }) => {
+
+    const { chatsState } = useContext(ChatsContext)
+
     return (
-        <StoreContext.Consumer>
-            {({state}) => (
-                <div className={s.rooms}>
-                    {rooms ? rooms.map(room => (
-                            <Room
-                                roomId={room.id}
-                                activeRoom={activeRoom}
-                                avatarUrl={room.avatar_url}
-                                name={room.name}
-                                members={room.members}
-                                setAsActiveRoom={setActiveRoom}
-                                myId={state.user_id}
-                                key={room.id}
-                            />
-                    )) : <div>Loading...</div>}
-                </div>)}
-        </StoreContext.Consumer>
-    );
+        <div className={s.rooms}>
+            {chatsState.isSet ? chatsState.rooms.map(room => (
+                <Room
+                    roomId={room.id}
+                    activeRoom={activeRoom}
+                    avatarUrl={room.avatar_url}
+                    name={room.name}
+                    members={room.members}
+                    setAsActiveRoom={setActiveRoom}
+                    myId={chatsState.user_id}
+                    key={room.id}
+                />
+            )) : <div>Loading...</div>}
+        </div>
+    )
+
 }
 
 export default Rooms;

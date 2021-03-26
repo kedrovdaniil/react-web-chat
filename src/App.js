@@ -1,101 +1,100 @@
 import s from "./App.module.scss"
-import Echo from "laravel-echo"
-import { useEffect, useState } from "react"
-import { AuthAPI } from "./api/api"
 import Messenger from "./components/account/Messenger"
 import RegistrationForm from "./components/main/registration/RegistrationForm"
-import LoginForm from "./components/main/login/LoginForm"
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, useHistory, useLocation } from "react-router-dom"
 import Main from "./components/main/Main"
-import { StoreContext } from "./store/store"
+import StoreProvider from "./contexts/StoreProvider"
 import Modal from "./components/modal/Modal"
-import { getCookie } from "./helpers/helpers"
-
-// window.io = require("socket.io-client")
-
-// export var echo_instance = new Echo({
-// 	broadcaster: "socket.io",
-// 	host: process.env.VUE_APP_BACKEND_APP + ":6001",
-// 	auth: {
-// 		headers: {
-// 			/** I'm using access tokens to access  **/
-// 			Authorization: "Bearer " + Cookies.get("access_token"),
-// 		},
-// 	},
-// })
-
-// window.Echo = new Echo({
-//     broadcaster: 'socket.io',
-// 	host: window.location.hostname + ':6001', // this is laravel-echo-server host
-// 	authEndpoint: "/api/broadcasting/auth"
-// });
-
-// console.log(window.Echo, window.io)
+import ChatsProvider from "./contexts/ChatsProvider"
+import WebSocketHOC from "./components/websocket/WebSocketHOC"
+import AuthHOC from "./components/auth/AuthHOC"
 
 function App() {
-	const [state, setState] = useState({
-		appInitialized: false,
-		appError: null,
-		isModalOpen: false,
-		modalType: "info", // 'info', 'warn', 'error'
-		modalTitle: "",
-		modalAllowForClose: true,
+	// // history
+	// let h = useHistory()
+	// console.log('h', h)
 
-		user_id: null,
-		auth: false,
-		name: null,
-		avatarUrl: null,
+	// // check auth and set init
+	// useEffect(() => {
+	// 	// check auth and redirect if not auth
+	// 	const fetchAuth = async () => {
+	// 		const r = await AuthAPI.user()
+	// 		if (r.status === 401) {
+	// 			setState((state) => ({
+	// 				...state,
+	// 				appInitialized: true,
+	// 				auth: false,
+	// 			}))
+	// 			// redirect
+	// 			window.location.assign("/")
+	// 		} else if (r.status === 500) {
+	// 			console.warn(
+	// 				"Кажется, с сервером сейчас какие-то неполадки. Пожалуйста, попробуйте зайти позже."
+	// 			)
+	// 			setState((state) => ({
+	// 				...state,
+	// 				appInitialized: true,
+	// 				auth: false,
+	// 				appError: r.data.error,
+	// 				modalType: "error",
+	// 				modalTitle: "Error",
+	// 				modalAllowForClose: false,
+	// 				isModalOpen: true,
+	// 			}))
+	// 		} else {
+	// 			setState((state) => ({
+	// 				...state,
+	// 				appInitialized: true,
+	// 				user_id: r.id,
+	// 				auth: true,
+	// 				name: r.name,
+	// 				avatarUrl: r.avatar_url,
+	// 			}))
+	// 		}
+	// 	}
+	// 	fetchAuth()
 
-		messages: [],
-	})
-
-	useEffect(() => {
-		// connect to broadcast channel
-		window.io = require("socket.io-client")
-
-		window.Echo = new Echo({
-			broadcaster: 'socket.io',
-			host: window.location.hostname + ':6001', // this is laravel-echo-server host
-			authEndpoint: "/api/broadcasting/auth"
-		});			
-		
-		window.Echo.channel(`chat.1`)
-			.listen('.NewMessage', (e) => {
-				console.log('NewMessage', e.message)
-		})
-
-		return () => { 
-			window.Echo.leave(`chat.1`)
-		}
-	}, [])
+	// 	// receive data
+	// 	const receiveChats = async () => {
+	// 		const c = await ChatsAPI.chats()
+	// 		if (c) {
+	// 			// setRooms(c.data)
+	// 			// console.log('STATE', state, "|", { ...state, rooms: c.data })
+	// 			setChatsState((chatsState) => ({ ...chatsState, isSet: true, rooms: c.data }))
+	// 		}
+	// 	}
+	// 	receiveChats()
+	// }, [setState, setChatsState])
 
 	return (
 		<>
-			<StoreContext.Provider value={{ state, setState }}>
-				<Router>
-					<Switch>
-						<Route path='/' exact>
-							<Main isInit={state.appInitialized} />
-						</Route>
-						<Route path='/chats' exact>
-							<Messenger
-								isInit={state.appInitialized}
-								name={state.name}
-								auth={state.auth}
-								avatarUrl={state.avatarUrl}
-							/>
-						</Route>
-					</Switch>
-				</Router>
-				{state.isModalOpen && (
-					<Modal
-						type={state.modalType}
-						title={state.modalTitle}
-						message={state.appError}
-						modalAllowForClose={state.modalAllowForClose}
-					/>
-				)}
-			</StoreContext.Provider>
+			<StoreProvider>
+				<ChatsProvider>
+					<AuthHOC>
+						<WebSocketHOC>
+							<Router>
+								<Switch>
+									<Route path='/' exact>
+										<Main />
+									</Route>
+									<Route path='/chats' exact>
+										<Messenger />
+									</Route>
+								</Switch>
+							</Router>
+
+							{/* {state.isModalOpen && (
+								<Modal
+									// type={state.modalType}
+									// title={state.modalTitle}
+									// message={state.appError}
+									// modalAllowForClose={state.modalAllowForClose}
+								/>
+							)} */}
+						</WebSocketHOC>
+					</AuthHOC>
+				</ChatsProvider>
+			</StoreProvider>
 		</>
 	)
 }

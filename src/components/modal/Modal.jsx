@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Portal from './../portal/Portal';
 import s from './Modal.module.scss';
-import { StoreContext } from './../../store/store';
+import { StoreContext } from '../../contexts/StoreProvider';
 
 const Modal = ({ type, title, message, modalAllowForClose }) => {
 

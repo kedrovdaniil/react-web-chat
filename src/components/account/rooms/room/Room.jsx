@@ -1,16 +1,14 @@
 import React, { useContext } from 'react';
 import s from './Room.module.scss'
-import { StoreContext } from './../../../../store/store';
+import { StoreContext } from '../../../../contexts/StoreProvider';
 
 const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, myId}) => {
-    
+
+    // context
     const {state} = useContext(StoreContext)
 
     const userId = state.user_id
     const isPublicChat = members.length !== 2 ? true : false
-
-    // const avatar = undefined
-    // const roomName = undefined
 
     const getAvatar = () => {
         if (isPublicChat) {
@@ -38,13 +36,9 @@ const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, my
         const avatar = anotherMan.avatar_url
         const roomName = anotherMan.name
     }
-    // console.log("avatar", avatar)
-    // console.log("roomName", roomName)
-    // console.log("member", members)
-    // console.log('member',members.filter(m => m.id != userId)[0].name)
 
     return (
-        <div className={Number(activeRoom) === Number(roomId) ? `${s.chat} ${s.chatActive}` : s.chat} onClick={(e) => setAsActiveRoom(e.target.dataset.id)} data-id={roomId}>
+        <div className={Number(activeRoom) === Number(roomId) ? `${s.chat} ${s.chatActive}` : s.chat} onClick={(e) => setAsActiveRoom(Number(e.target.dataset.id))} data-id={roomId}>
             <img src={getAvatar()} />
             <span>{getRoomName()}</span>
         </div>

@@ -6,89 +6,54 @@ import { Link, useHistory } from "react-router-dom"
 import { AuthAPI, ChatsAPI } from "../../api/api"
 import Loader from '../loader/Loader';
 import Chat from './chat/Chat';
-import { StoreContext } from './../../store/store';
+import { StoreContext } from '../../contexts/StoreProvider';
 import ChatC from './chat/ChatC';
+import { ChatsContext } from '../../contexts/ChatsProvider';
 
-const Messenger = ({ avatarUrl, name, auth }) => {
-	let h = useHistory()
-	const { state, setState } = useContext(StoreContext)
+const Messenger = () => {
 
-	useEffect(() => {
-		// check auth and redirect if not auth
-		const fetchAuth = async () => {
-			const r = await AuthAPI.user()
-			if (r.status === 401) {
-				setState(state => ({
-					...state, appInitialized: true, auth: false
-				}))
-				h.push('/')
-			} else if (r.status === 500) {
-				console.warn('Кажется, с сервером сейчас какие-то неполадки. Пожалуйста, попробуйте зайти позже.')
-				setState(state => ({
-					...state, appInitialized: true, auth: false, appError: r.data.error, modalType: 'error', modalTitle: 'Error', modalAllowForClose: false, isModalOpen: true
-				}))
-			} else {
-				setState(state => ({
-					...state,
-					appInitialized: true,
-					user_id: r.id,
-					auth: true,
-					name: r.name,
-					avatarUrl: r.avatar_url,
-				}))
-			}
-		}
-		fetchAuth()
+	// context
+	const { state } = useContext(StoreContext)
+	const { chatsState, setActiveChat } = useContext(ChatsContext)
+	console.log('chatsState', chatsState)
 
-		// receive data
-		const receiveChats = async () => {
-			const c = await ChatsAPI.chats()
-			if (c) {
-				setRooms(c.data)
-			}
-		}
-		receiveChats()
-	}, [setState])
-
-	const [rooms, setRooms] = useState([])
+	// active room
 	const [activeRoomId, setActiveIdRoom] = useState(null)
-
 	const setActiveRoom = (id) => {
 		setActiveIdRoom(id)
+		setActiveChat(id)
 	}
-	
-	return (
-		<StoreContext.Consumer>{({ state }) => (
-			<>
-				{ state.appInitialized && auth ?
 
-					<div className={s.messengerWrapper}>
-						<div className={s.head}>
-							<div className={s.accountWrapper}>
-								{avatarUrl ? (
-									<img src={avatarUrl} alt={name + " avatar"} />
-								) : (
-										<div className={s.noAvatar}></div>
-									)}
-								<span className={s.account}>Account: {name}</span>
-							</div>
-							<div>
-								<Link to="/" className={s.backBtn}>Back</Link>
-							</div>
+	return (
+		<>
+			{ state.appInitialized && state.auth ?
+
+				<div className={s.messengerWrapper}>
+					<div className={s.head}>
+						<div className={s.accountWrapper}>
+							{state.avatarUrl ? (
+								<img src={state.avatarUrl} alt={state.name + " avatar"} />
+							) : (
+									<div className={s.noAvatar}></div>
+								)}
+							<span className={s.account}>Account: {state.name}</span>
 						</div>
-						<div className={s.rooms}>
-							<Rooms activeRoom={activeRoomId} rooms={rooms} setActiveRoom={setActiveRoom} />
-						</div>
-						<div className={s.chat}>
-							{activeRoomId ?
-								<ChatC chatId={Number(activeRoomId)} rooms={rooms} />
-								: <div className={s.textCenter}>Выберите диалог</div>}
+						<div>
+							<Link to="/" className={s.backBtn}>Back</Link>
 						</div>
 					</div>
+					<div className={s.rooms}>
+						<Rooms activeRoom={activeRoomId} rooms={chatsState.rooms} setActiveRoom={setActiveRoom} />
+					</div>
+					<div className={s.chat}>
+						{activeRoomId ?
+							<ChatC chatId={activeRoomId} rooms={chatsState.rooms} />
+							: <div className={s.textCenter}>Выберите диалог</div>}
+					</div>
+				</div>
 
-					: <Loader />}
-			</>)}
-		</StoreContext.Consumer>
+				: <Loader />}
+		</>
 	)
 }
 

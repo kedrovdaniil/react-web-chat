@@ -36,7 +36,7 @@ export const ChatsAPI = {
     },
 
     chat(chatId) {
-        return instance.get(`api/chat/${chatId}`).then(r => r.data)
+        return instance.get(`api/chat/${chatId}/messages`).then(r => r.data)
     }
 }
 
@@ -46,6 +46,15 @@ export const ChatAPI = {
         postData.append('chat_id', chatId)
         postData.append('message', message)
 
-        return instance.post(`api/chat/${chatId}`, postData).then(r => r.status)
+        return instance.post(`api/chat/${chatId}/messages`, postData).then(r => r.status)
+    },
+
+    getPaginatedChunk(chatId, page) {
+        console.log("getPaginatedChunk params: ", {chatId, page})
+        return instance.get(`api/chat/${chatId}/messages?page=${page}`).then(r => r.data)
+    },
+
+    getChat(chatId) {
+        return instance.get(`api/chat/${chatId}/messages`).then(r => r.data)
     }
 }
