@@ -8,11 +8,21 @@ import { StoreContext } from '../../../contexts/StoreProvider';
 import Echo from "laravel-echo"
 import { ChatsContext } from '../../../contexts/ChatsProvider';
 
-const Chat = memo(({ isPublic, chatName, messages, isLoadingActive, chatId, addNewMessage, userId }) => {
-    console.log('isLoadingActive', isLoadingActive)
+const Chat = memo(({ 
+    isPublic,
+    chatName, 
+    messages, 
+    isLoadingActive, 
+    chatId, 
+    addNewMessage, 
+    userId, 
+    onScrollToTop, 
+    isTyping, 
+    typingUsers 
+}) => {
+    // console.log('isLoadingActive', isLoadingActive)
 
     // context
-    const { onScrollToTop } = useContext(ChatsContext)
 
     // ref
     const messagesContainer = useRef()
@@ -44,7 +54,7 @@ const Chat = memo(({ isPublic, chatName, messages, isLoadingActive, chatId, addN
                         </div>}
                     </div>
                 </div>
-                <AddMessage chatId={chatId} addNewMessage={addNewMessage} />
+                <AddMessage chatId={chatId} addNewMessage={addNewMessage} isTyping={isTyping} typingUsers={typingUsers} />
             </>
         </div>
     );

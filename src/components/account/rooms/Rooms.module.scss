@@ -6,13 +6,19 @@
     overflow-y: scroll;
     position: relative;
     scrollbar-width: none;
+    display: grid;
+    align-content: space-between;
 
-	:last-child {
-		border-bottom: none;
-	}
+	// :last-child {
+	// 	border-bottom: none;
+	// }
 
 	&::-webkit-scrollbar {
         width: 0;
+    }
+
+    .addRoom {
+        
     }
     
 

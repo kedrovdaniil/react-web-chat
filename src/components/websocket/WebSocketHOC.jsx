@@ -7,7 +7,7 @@ import { StoreContext } from '../../contexts/StoreProvider';
 
 const WebSocketHOC = memo(({ children }) => {
 
-	const { chatsState, setNewMessage } = useContext(ChatsContext)
+	const { chatsState, setNewMessage, setTyping } = useContext(ChatsContext)
 	const { state } = useContext(StoreContext)
 	// console.log('chatsState room 1', chatsState.rooms[0].messages.data)
 
@@ -20,10 +20,11 @@ const WebSocketHOC = memo(({ children }) => {
 		window.Echo = new Echo({
 			broadcaster: 'socket.io',
 			host: window.location.hostname + ':6001', // this is laravel-echo-server host
-			// authEndpoint: "/api/broadcasting/auth"
+			// authEndpoint: "/broadcasting/auth",
 		});
 
-		window.Echo.channel(`messenger`)
+		window.Echo.private(`messenger`)
+		// window.Echo.channel(`messenger`)
 		// window.Echo.join(`messenger`)
 			// .here(users => console.log('ECHO | users', users))
 			// .joining(user => console.log('ECHO | joining user', user))
@@ -33,7 +34,7 @@ const WebSocketHOC = memo(({ children }) => {
 				// console.log('WebSocketHOC.jsx | NewMessage', e.message)
 				// console.log('WebSocketHOC.jsx | Message Example', chatsState.rooms.find(r => r.id = 1).messages.data[0])
 				// console.log('WebSocketHOC.jsx | ON MOUNT: 1.messages.data', chatsState.rooms.find(r => r.id = e.message.chat_id).messages.data)
-				console.log('websocket event', e, state.user_id !== e.senderId)
+				// console.log('websocket event', e, state.user_id !== e.senderId)
 
 
 				setNewMessage(e.message, e.chatId, state.user_id !== e.senderId)
@@ -50,18 +51,19 @@ const WebSocketHOC = memo(({ children }) => {
 
 			})
 			// .whisper('typing', {
+			// 	chat_id: chatsState.activeChatId,
 			// 	user_id: state.user_id,
-			// 	user_name: "Daniil"
+			// 	user_name: state.name
 			// })
-			// .listenForWhisper('typing', (e) => {
-			// 	console.log('whisper', e.user_id, e.user_name);
-			// })
-
-
+			.listenForWhisper('typing', (e) => {
+				console.log('TYPING EVENT')
+				setTyping(e.chat_id, e.user_id, e.user_name)
+				// console.log('whisper', e.chat_id, e.user_id, e.user_name);
+			})
 
 		return () => {
 			window.Echo.leave(`messenger`)
-			console.log('chat leaved')
+			// console.log('chat leaved')
 		}
 	}, [])
 

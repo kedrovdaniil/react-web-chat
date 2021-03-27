@@ -1,46 +1,72 @@
-@import './../../../../appVariables.scss';
+@import "./../../../../appVariables.scss";
 
 .addMessage {
 	grid-area: addMessage;
 	// position: absolute;
 	// bottom: 20px;
 	display: flex;
-    width: 100%;
-    
-    form {
-        width: inherit;
-        display: flex;
-    }
+	width: 100%;
 
-	.input {
-		border: 2px solid $secondaryColor;
-		border-radius: 50px;
-		padding: 10px 15px;
-		margin: 5px;
-		margin-left: 15px;
-        width: 100%;
-        transition: 0.3s;
+	form {
+		width: inherit;
+		display: grid;
 
-        &:focus {
-            outline-width: 0;
-            border-color: lightcyan;
-            transition: 0.3s;
-        }
-	}
+		.typing {
+			height: 15px;
+			font-size: smaller;
+			margin-left: 20px;
+			color: gray;
 
-	.btn {
-		background: $secondaryColor;
-		color: snow;
-		border: none;
-		border-radius: 50px;
-		padding: 10px 20px;
-		margin: 5px;
-		margin-left: 0;
-        margin-right: 15px;
-        
-        &:focus {
-            outline-width: 0;
-            background-color: $primaryColor;
-        }
+			span {
+				animation-name: fade;
+				animation-duration: 2s;
+				animation-delay: 0.15s;
+				animation-timing-function: ease-in-out;
+				transform-origin: 0 100%;
+				animation-iteration-count: infinite;
+			}
+
+
+			@keyframes fade {
+				50% { opacity: .3; }
+			}
+		}
+
+		.inputWrapper {
+			width: inherit;
+			display: flex;
+
+			.input {
+				border: 2px solid $secondaryColor;
+				border-radius: 50px;
+				padding: 10px 15px;
+				margin: 5px;
+				margin-left: 15px;
+				width: 100%;
+				transition: 0.3s;
+
+				&:focus {
+					outline-width: 0;
+					border-color: lightcyan;
+					transition: 0.3s;
+				}
+			}
+
+			.btn {
+				background: $secondaryColor;
+				color: snow;
+				border: none;
+				border-radius: 50px;
+				padding: 10px 20px;
+				margin: 5px;
+				margin-left: 0;
+				margin-right: 15px;
+
+				&:focus {
+					outline-width: 0;
+					background-color: $primaryColor;
+				}
+			}
+		}
 	}
 }

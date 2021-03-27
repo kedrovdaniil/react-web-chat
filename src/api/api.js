@@ -50,7 +50,7 @@ export const ChatAPI = {
     },
 
     getPaginatedChunk(chatId, page) {
-        console.log("getPaginatedChunk params: ", {chatId, page})
+        // console.log("getPaginatedChunk params: ", {chatId, page})
         return instance.get(`api/chat/${chatId}/messages?page=${page}`).then(r => r.data)
     },
 

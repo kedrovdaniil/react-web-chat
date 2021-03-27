@@ -2,12 +2,10 @@ import React, { useContext } from 'react';
 import s from './Room.module.scss'
 import { StoreContext } from '../../../../contexts/StoreProvider';
 
-const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, myId}) => {
+const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, myId, userId, isTyping, lastMessage}) => {
 
-    // context
-    const {state} = useContext(StoreContext)
+    console.log(`ROOM ${roomId} lastMessage = `, lastMessage)
 
-    const userId = state.user_id
     const isPublicChat = members.length !== 2 ? true : false
 
     const getAvatar = () => {
@@ -39,8 +37,13 @@ const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, my
 
     return (
         <div className={Number(activeRoom) === Number(roomId) ? `${s.chat} ${s.chatActive}` : s.chat} onClick={(e) => setAsActiveRoom(Number(e.target.dataset.id))} data-id={roomId}>
-            <img src={getAvatar()} />
-            <span>{getRoomName()}</span>
+            <img className={s.avatar} src={getAvatar()} />
+            <div className={s.info}>
+                <div>{getRoomName()}</div>
+                <div className={s.additional}>
+                    {isTyping ? <img className={s.typing} src="/typing.gif" alt="typing"/> : <span className={s.lastMessage}>{lastMessage}</span>}
+                </div>
+            </div>
         </div>
     );
 }

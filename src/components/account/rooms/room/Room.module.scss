@@ -1,45 +1,70 @@
-@import './../../../../appVariables.scss';
+@import "./../../../../appVariables.scss";
 
 .chat {
-    padding: 10px;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    border-bottom: 1px solid $borderColor;
-    transition: 0.1s;
-    cursor: pointer;
-    user-select: none;
-    
-    span {
-        color: rgb(46, 46, 46);
-        margin-left: 10px;
-        pointer-events: none;
-    }
+	padding: 10px;
+	display: flex;
+	justify-content: left;
+	align-items: flex-start;
+	border-bottom: 1px solid $borderColor;
+	transition: 0.1s;
+	cursor: pointer;
+	user-select: none;
 
-    img { 
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        border: 1px solid white;
-        box-sizing: border-box;
-        pointer-events: none;
-    }
+	.info {
+		margin-top: 5px;
+		color: rgb(46, 46, 46);
+		margin-left: 10px;
+		pointer-events: none;
+		font-weight: 600;
+		//
+		//     margin: 5px 0 0 10px;
+		// padding: 0;
+		// color: #808080;
 
-    &:hover {
-        background: $borderColor;
-        transition: 0.3s;
-    }
+		display: grid;
+
+		.additional {
+			font-weight: 400;
+
+			.lastMessage {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+
+			img {
+				height: 10px;
+				// width: ;
+			}
+		}
+	}
+
+	.avatar {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		border: 1px solid white;
+		box-sizing: border-box;
+		pointer-events: none;
+	}
+
+	&:hover {
+		background: $borderColor;
+		transition: 0.3s;
+	}
 }
 
 .chatActive {
-    background: $secondaryColor;
-    border-bottom: 1px solid $secondaryColor;
-    
-    span {
-        color: whitesmoke;
-    }
+	background: $secondaryColor;
+	border-bottom: 1px solid $secondaryColor;
 
-    &:hover {
-        background: $secondaryColor;
-    }
+	.info {
+		color: whitesmoke;
+	}
+
+	&:hover {
+		background: $secondaryColor;
+	}
 }

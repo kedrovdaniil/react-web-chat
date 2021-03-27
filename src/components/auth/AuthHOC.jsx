@@ -60,7 +60,7 @@ const AuthHOC = ({children}) => {
 			if (c) {
 				// setRooms(c.data)
 				// console.log('STATE', state, "|", { ...state, rooms: c.data })
-				console.log('set')
+				// console.log('set')
 				setChatsData(c.data)
 			}
 		}

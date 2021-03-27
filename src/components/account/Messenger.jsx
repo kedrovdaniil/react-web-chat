@@ -15,7 +15,6 @@ const Messenger = () => {
 	// context
 	const { state } = useContext(StoreContext)
 	const { chatsState, setActiveChat } = useContext(ChatsContext)
-	console.log('chatsState', chatsState)
 
 	// active room
 	const [activeRoomId, setActiveIdRoom] = useState(null)
@@ -47,7 +46,7 @@ const Messenger = () => {
 					</div>
 					<div className={s.chat}>
 						{activeRoomId ?
-							<ChatC chatId={activeRoomId} rooms={chatsState.rooms} />
+							<ChatC />
 							: <div className={s.textCenter}>Выберите диалог</div>}
 					</div>
 				</div>
