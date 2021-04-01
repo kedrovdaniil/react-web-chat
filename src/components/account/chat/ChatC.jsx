@@ -52,9 +52,38 @@ const ChatC = () => {
     const isTyping = room.messages.isTyping
     const typingUsers = room.messages.typingUsers
 
+    // members
+    const members = room.members
+
+    // isAdmin & isManager
+    console.log('room.members.find -> ', room.members.find(member => member.managed_by_user_id === state.user_id))
+    const isAdmin = room.managed_by_user_id === state.user_id
+    const isManager = room.created_by_user_id === state.user_id
+
+    // admin user
+    const adminUser = members.find(m => m.id === room.created_by_user_id)
+    const managerUser = members.find(m => m.id === room.managed_by_user_id)
+
     return (
         <>
-            <Chat isPublic={isPublic} chatName={chatName} messages={messages} isLoadingActive={isLoadingActive} chatId={chatId} addNewMessage={addNewMessage} userId={state.user_id} onScrollToTop={onScrollToTop} isTyping={isTyping} typingUsers={typingUsers} />
+            <Chat
+                isAdmin={isAdmin}
+                isManager={isManager}
+                isManager={isManager}
+                isPublic={isPublic}
+                chatName={chatName}
+                messages={messages}
+                isLoadingActive={isLoadingActive}
+                chatId={chatId}
+                addNewMessage={addNewMessage}
+                userId={state.user_id}
+                onScrollToTop={onScrollToTop}
+                isTyping={isTyping}
+                typingUsers={typingUsers}
+                members={members}
+                adminUser={adminUser}
+                managerUser={managerUser}
+            />
         </>
     );
 }

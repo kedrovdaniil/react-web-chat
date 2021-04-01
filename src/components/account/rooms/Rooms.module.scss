@@ -7,7 +7,7 @@
     position: relative;
     scrollbar-width: none;
     display: grid;
-    align-content: space-between;
+    align-content: flex-start;
 
 	// :last-child {
 	// 	border-bottom: none;
@@ -18,7 +18,34 @@
     }
 
     .addRoom {
-        
+        height: 40px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #c4e6d2;
+        color: #079236;
+        font-weight: 400;
+        cursor: pointer;
+        transition: 0.2s;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            fill: #079236;
+            margin-right: 10px;
+        }
+
+        &:hover {
+            background: #079236;
+            border-top: 1px solid #c4e6d2;
+            color: whitesmoke;
+            transition: 0.2s;
+            
+            svg {
+                fill: whitesmoke;
+            }
+        }
     }
     
 

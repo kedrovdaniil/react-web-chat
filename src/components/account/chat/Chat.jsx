@@ -7,18 +7,25 @@ import AddMessage from './addMessage/AddMessage';
 import { StoreContext } from '../../../contexts/StoreProvider';
 import Echo from "laravel-echo"
 import { ChatsContext } from '../../../contexts/ChatsProvider';
+import DeleteButton from './deleteButton/DeleteButton';
+import EditButton from './editButton/EditButton';
 
-const Chat = memo(({ 
+const Chat = memo(({
+    isAdmin,
+    isManager,
     isPublic,
-    chatName, 
-    messages, 
-    isLoadingActive, 
-    chatId, 
-    addNewMessage, 
-    userId, 
-    onScrollToTop, 
-    isTyping, 
-    typingUsers 
+    chatName,
+    messages,
+    isLoadingActive,
+    chatId,
+    addNewMessage,
+    userId,
+    onScrollToTop,
+    isTyping,
+    typingUsers,
+    members,
+    managerUser,
+    adminUser
 }) => {
     // console.log('isLoadingActive', isLoadingActive)
 
@@ -28,26 +35,46 @@ const Chat = memo(({
     const messagesContainer = useRef()
 
     useEffect(() => {
-        messagesContainer.current.addEventListener('scroll', onScrollToTop)
-        return () => messagesContainer.current.removeEventListener('scroll', onScrollToTop)
-    }, [])
+        const current = messagesContainer.current
+        current.addEventListener('scroll', onScrollToTop)
+        return () => current.removeEventListener('scroll', onScrollToTop)
+    }, [messagesContainer])
 
     return (
         <div className={s.chat}>
             <>
                 <div className={s.head}>
-                    {isLoadingActive && <div className={s.loader}>
-                        <img src="/loader.gif" alt="Loading" />
-                    </div>}
-                    <div className={s.chatName}>
-                        <span>{chatName}</span>
+                    <div className={s.control}>
+                        <EditButton
+                            isAdmin={isAdmin}
+                            isManager={isManager}
+                            chatId={chatId}
+                            chatName={chatName}
+                            members={members}
+                            managerUser={managerUser}
+                            adminUser={adminUser}
+                        />
+                    </div>
+                    <div className={s.name}>
+                        {isLoadingActive && <div className={s.loader}>
+                            <img src="/loader.gif" alt="Loading" />
+                        </div>}
+                        <div className={s.chatName}>
+                            <span>{chatName}</span>
+                        </div>
+                    </div>
+                    <div className={s.control}>
+                        <DeleteButton chatId={chatId} />
                     </div>
                 </div>
                 <div className={s.messages} ref={messagesContainer}>
                     <div className={s.messagesDiv}>
-
                         {messages ? messages.map((message, i) => (
-                            <Message message={message.content} isMy={userId === message.user_id} createdAt={message.created_at} key={i} />
+                            <Message 
+                            message={message.content} 
+                            isMy={userId === message.user_id} 
+                            createdAt={message.created_at} 
+                            key={i} />
                         )) : <div className={s.textCenter}>
                             <img src="/donut.gif" alt="Loading" className={s.donut} />
                         Loading...

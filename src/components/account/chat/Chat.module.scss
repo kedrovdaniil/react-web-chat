@@ -5,7 +5,7 @@
 	// width: 100%;
 	border-bottom-right-radius: 10px;
 	display: grid;
-	grid: "head" 25px "messages" 1fr "addMessage" 70px;
+	grid: "head" 40px "messages" 1fr "addMessage" 70px;
 	// grid-template-areas: "head" "messages" "addMessage";
 	// grid-template-rows: 70px 1fr 100px;
 	height: calc(100vh - 20px - 75px);
@@ -18,9 +18,11 @@
 	.head {
 		grid-area: head;
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
-		background: rgb(218, 243, 235);
+		background: white;
+		// border-bottom: 1px solid #daf3eb;
+		border-bottom: 1px solid #e0e0e0;
 		color: rgb(46, 46, 46);
 		padding: 5px;
 
@@ -35,6 +37,27 @@
 			img {
 				height: 18px;
 				width: 18px;
+			}
+		}
+
+		.name {
+			display: flex;
+		}
+
+		.control {
+			button {
+				border: none;
+				background: transparent;
+				display: grid;
+				justify-items: center;
+				align-content: center;
+				padding: 5px;
+			}
+
+			svg {
+				height: 20px;
+				width: 20px;
+				fill: #692bcc;
 			}
 		}
 	}

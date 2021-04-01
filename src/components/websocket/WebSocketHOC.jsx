@@ -56,7 +56,6 @@ const WebSocketHOC = memo(({ children }) => {
 			// 	user_name: state.name
 			// })
 			.listenForWhisper('typing', (e) => {
-				console.log('TYPING EVENT')
 				setTyping(e.chat_id, e.user_id, e.user_name)
 				// console.log('whisper', e.chat_id, e.user_id, e.user_name);
 			})

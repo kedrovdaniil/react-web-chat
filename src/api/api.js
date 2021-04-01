@@ -37,7 +37,40 @@ export const ChatsAPI = {
 
     chat(chatId) {
         return instance.get(`api/chat/${chatId}/messages`).then(r => r.data)
-    }
+    },
+
+    create(name, members) {
+        const postData = new FormData()
+        postData.append('name', name)
+        postData.append('members', JSON.stringify(members))
+
+        return instance.post(`api/chat/create`, postData).then(r => r.data)
+    },
+
+    delete(chatId) {
+        return instance.get(`api/chat/${chatId}/delete`).then(r => r.data.data)
+    },
+
+    edit(chatId, name) {
+        const postData = new FormData()
+        postData.append('name', name)
+
+        return instance.post(`api/chat/${chatId}/edit`, postData).then(r => r.data.data)
+    },
+
+    addMember(chatId, userId) {
+        const postData = new FormData()
+        postData.append('userId', userId)
+
+        return instance.post(`api/chat/${chatId}/add-member`, postData).then(r => r.data.data)
+    },
+
+    removeMember(chatId, userId) {
+        const postData = new FormData()
+        postData.append('userId', userId)
+
+        return instance.post(`api/chat/${chatId}/remove-member`, postData).then(r => r.data.data)
+    },
 }
 
 export const ChatAPI = {
@@ -56,5 +89,14 @@ export const ChatAPI = {
 
     getChat(chatId) {
         return instance.get(`api/chat/${chatId}/messages`).then(r => r.data)
+    }
+}
+
+export const usersAPI = {
+    findUsers(search) {
+        const postData = new FormData()
+        postData.append('search', search)
+
+        return instance.post(`api/chat/users/search`, postData).then(r => r.data.data)
     }
 }

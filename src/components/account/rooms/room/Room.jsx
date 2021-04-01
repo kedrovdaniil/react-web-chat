@@ -2,9 +2,7 @@ import React, { useContext } from 'react';
 import s from './Room.module.scss'
 import { StoreContext } from '../../../../contexts/StoreProvider';
 
-const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, myId, userId, isTyping, lastMessage}) => {
-
-    console.log(`ROOM ${roomId} lastMessage = `, lastMessage)
+const Room = ({ avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, myId, userId, isTyping, lastMessage }) => {
 
     const isPublicChat = members.length !== 2 ? true : false
 
@@ -16,13 +14,13 @@ const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, my
             return anotherMan.avatar_url
         }
     }
-    
+
     const getRoomName = () => {
         if (isPublicChat) {
-            return name ? name : "Общий чат"
+            return name ? name : "Public chat"
         } else {
             const anotherMan = members.filter(m => m.id != userId)[0]
-            return anotherMan.name
+            return name ? name : anotherMan.name
         }
     }
 
@@ -37,11 +35,13 @@ const Room = ({avatarUrl, name, setAsActiveRoom, roomId, activeRoom, members, my
 
     return (
         <div className={Number(activeRoom) === Number(roomId) ? `${s.chat} ${s.chatActive}` : s.chat} onClick={(e) => setAsActiveRoom(Number(e.target.dataset.id))} data-id={roomId}>
-            <img className={s.avatar} src={getAvatar()} />
+            <div className={s.image}>
+                <img className={s.avatar} src={getAvatar()} />
+            </div>
             <div className={s.info}>
-                <div>{getRoomName()}</div>
+                <span className={s.name}>{getRoomName()}</span>
                 <div className={s.additional}>
-                    {isTyping ? <img className={s.typing} src="/typing.gif" alt="typing"/> : <span className={s.lastMessage}>{lastMessage}</span>}
+                    {isTyping ? <img className={s.typing} src="/typing.gif" alt="typing" /> : <span className={s.lastMessage}>{lastMessage}</span>}
                 </div>
             </div>
         </div>

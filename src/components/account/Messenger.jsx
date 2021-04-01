@@ -23,6 +23,12 @@ const Messenger = () => {
 		setActiveChat(id)
 	}
 
+	useEffect(() => {
+		const cancel = (e) => e.keyCode === 27 ? setActiveIdRoom(null) : null
+		document.addEventListener('keyup', cancel)
+		return () => document.removeEventListener('keyup', cancel)
+	})
+
 	return (
 		<>
 			{ state.appInitialized && state.auth ?

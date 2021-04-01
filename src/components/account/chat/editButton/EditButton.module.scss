@@ -1,0 +1,148 @@
+.wrapper {
+	border-radius: 4px;
+	transition: 0.1s;
+
+	.button {
+		border: none;
+		background: transparent;
+		display: grid;
+		justify-items: center;
+		align-content: center;
+		padding: 5px;
+		cursor: pointer;
+
+		svg {
+			height: 20px;
+			width: 20px;
+			fill: #692bcc;
+			fill: #2bcc61;
+		}
+	}
+
+	&:hover {
+		background: lightgray;
+		transition: 0.2s;
+	}
+}
+
+.modal {
+	display: grid;
+
+	h2 {
+		padding: 0;
+		margin: 0;
+		font-size: medium;
+		font-weight: 500;
+		margin-bottom: 5px;
+	}
+
+	hr {
+		border: none;
+		border-bottom: 1px solid #692bcc;
+	}
+
+	.name {
+		.input {
+			width: calc(100% - 16px - 4px);
+			padding: 5px 8px;
+			font-size: 16px;
+			border-radius: 2px;
+			border: none;
+			margin: 5px 0;
+			border: 2px solid #692bcc;
+		}
+	}
+
+	.membersWrapper {
+		.members {
+			max-height: 350px;
+			overflow-y: auto;
+		}
+
+		.addButton {
+			margin-top: 5px;
+			background: transparent;
+			display: flex;
+			width: 100%;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			gap: 10px;
+
+			&:hover {
+				background: #692bcc;
+			}
+
+			svg {
+				height: 20px;
+				width: 20px;
+				fill: whitesmoke;
+			}
+		}
+	}
+
+	.buttons {
+		display: flex;
+		gap: 10px;
+
+		button {
+			padding: 5px 15px;
+			font-size: 16px;
+			border-radius: 4px;
+			border: none;
+			margin: 5px 0;
+			background: #079236;
+			color: whitesmoke;
+			height: 40px;
+			cursor: pointer;
+			transition: 0.2s;
+			width: 100%;
+		}
+
+		.save {
+			background: #692bcc;
+		}
+	}
+}
+
+.addMemberModal {
+	.input {
+		width: 100%;
+		padding: 5px 8px;
+		font-size: 16px;
+		border-radius: 2px;
+		border: none;
+		margin: 5px 0;
+		border: 2px solid #692bcc;
+	}
+
+	.buttons {
+		display: flex;
+		gap: 10px;
+
+		button {
+			padding: 5px 15px;
+			font-size: 16px;
+			border-radius: 4px;
+			border: none;
+			margin: 5px 0;
+			color: whitesmoke;
+			height: 40px;
+			cursor: pointer;
+			transition: 0.2s;
+			width: 100%;
+		}
+
+		.cancel {
+			background: #079236;
+		}
+
+		.add {
+			background: #692bcc;
+
+			&:disabled {
+				background: lightgray;
+			}
+		}
+	}
+}

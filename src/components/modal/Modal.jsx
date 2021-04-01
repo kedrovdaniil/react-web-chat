@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { Children, useContext } from 'react';
 import Portal from './../portal/Portal';
 import s from './Modal.module.scss';
 import { StoreContext } from '../../contexts/StoreProvider';
 
-const Modal = ({ type, title, message, modalAllowForClose }) => {
+const Modal = ({ type, title, children, modalAllowForClose, onClose }) => {
 
     const {state, setState} = useContext(StoreContext)
 
@@ -27,7 +27,8 @@ const Modal = ({ type, title, message, modalAllowForClose }) => {
     }
 
     const closeHandler = () => {
-        setState({...state, isModalOpen: false})
+        // setState({...state, isModalOpen: false})
+        onClose()
     }
 
     return (
@@ -37,11 +38,13 @@ const Modal = ({ type, title, message, modalAllowForClose }) => {
                     <div className={modalClass}>
                         <div className={s.head}>
                             <span className={s.title}>{title}</span>
-                            <div className={!modalAllowForClose ? s.disabled : s.close }>
-                                <span onClick={modalAllowForClose ? closeHandler : null}>&#10006;</span>
+                            <div className={!modalAllowForClose ? s.disabled : s.close } onClick={modalAllowForClose ? closeHandler : null}>
+                                <span >&#10006;</span>
                             </div>
                         </div>
-                        <div className={s.messageWrapper}><p className={s.message}>{message}</p></div>
+                        <div className={s.messageWrapper}>
+                            {children}
+                        </div>
                     </div>
                 </div>
             </Portal>

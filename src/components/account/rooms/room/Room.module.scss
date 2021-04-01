@@ -2,7 +2,9 @@
 
 .chat {
 	padding: 10px;
-	display: flex;
+	display: grid;
+	grid-template-columns: 50px 1fr;
+	gap: 10px;
 	justify-content: left;
 	align-items: flex-start;
 	border-bottom: 1px solid $borderColor;
@@ -13,15 +15,26 @@
 	.info {
 		margin-top: 5px;
 		color: rgb(46, 46, 46);
-		margin-left: 10px;
 		pointer-events: none;
 		font-weight: 600;
+		// border: 1px solid salmon;
+		// display: flex;
+		// justify-content: space-between;
 		//
 		//     margin: 5px 0 0 10px;
 		// padding: 0;
 		// color: #808080;
-
+		width: 100%;
 		display: grid;
+		// grid-template-columns: 1fr 15px;
+
+		.name {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 1;
+			-webkit-box-orient: vertical;
+		}
 
 		.additional {
 			font-weight: 400;
@@ -41,13 +54,21 @@
 		}
 	}
 
-	.avatar {
+	.image {
 		height: 50px;
 		width: 50px;
+		overflow: hidden;
 		border-radius: 50%;
-		border: 1px solid white;
-		box-sizing: border-box;
-		pointer-events: none;
+		// border: 1px solid #3a1871;
+		// box-shadow: 0 0 0px 1px #3a1871;
+
+		.avatar {
+			height: 50px;
+			width: 50px;
+			border-radius: 50%;
+			box-sizing: border-box;
+			pointer-events: none;
+		}
 	}
 
 	&:hover {
@@ -59,6 +80,10 @@
 .chatActive {
 	background: $secondaryColor;
 	border-bottom: 1px solid $secondaryColor;
+
+	.image {
+		box-shadow: 0 0 0px 1px #3a1871;
+	}
 
 	.info {
 		color: whitesmoke;
