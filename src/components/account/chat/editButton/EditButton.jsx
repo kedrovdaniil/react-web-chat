@@ -53,11 +53,9 @@ const AddMemberModal = ({
 
         // get search results
         const results = await usersAPI.findUsers(e.target.value)
-        console.log('RESULTS', results)
-        console.log('currentMembers', currentMembers)
 
         // set result
-        const filteredResults = results.filter(user => { console.log('FILTER: USER = ', user, '|', currentMembers.includes(user)); return filterAddedUsers(user) })
+        const filteredResults = results.filter(user => filterAddedUsers(user))
         setSearchResults(filteredResults)
         setIsSearchLoading(false)
     }
@@ -67,7 +65,7 @@ const AddMemberModal = ({
         setIsSearchLoading(true)
         const init = async () => {
             const r = await usersAPI.findUsers("")
-            const filteredResutls = r.filter(user => { console.log('FILTER: USER = ', user, '|', currentMembers.includes(user)); return filterAddedUsers(user) })
+            const filteredResutls = r.filter(user => filterAddedUsers(user))
             setSearchResults(filteredResutls)
             setIsSearchLoading(false)
         }

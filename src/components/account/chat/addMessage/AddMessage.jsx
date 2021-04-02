@@ -25,15 +25,14 @@ const AddMessage = ({chatId, addNewMessage, isTyping, typingUsers}) => {
     const submitHandler = async (e) => {
         e.preventDefault()
         // console.log('Submit', message)
+        addNewMessage(message)
+        setMessage("")
         const status = await ChatAPI.newMessage(chatId, message)
         if (status === 200) {
-            addNewMessage(message)
-            setMessage("")
+
         }
         // console.log('Response status', status)
     }
-
-    console.log('typingUsers', typingUsers)
 
     return (
         <div className={s.addMessage}>

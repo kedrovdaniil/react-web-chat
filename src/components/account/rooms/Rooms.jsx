@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import { StoreContext } from '../../../contexts/StoreProvider';
 import AddRoom from './addRoom/AddRoom';
 import PlusSVG from '../../icons/PlusSVG';
+import Loader from '../../loader/Loader';
 
 const Rooms = ({ activeRoom, rooms, setActiveRoom }) => {
 
@@ -51,7 +52,7 @@ const Rooms = ({ activeRoom, rooms, setActiveRoom }) => {
                         isTyping={isTyping(room.id)}
                         lastMessage={lastMessage(room.id)}
                     />
-                )) : <div>Loading...</div>}
+                )) : <img src='/loader.gif' />}
             </div>
         </div>
     )

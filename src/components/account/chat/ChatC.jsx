@@ -5,13 +5,13 @@ import Echo from 'laravel-echo';
 import { ChatsAPI } from '../../../api/api';
 import Chat from './Chat';
 import { ChatsContext } from '../../../contexts/ChatsProvider';
+import DateTime from 'luxon/src/datetime.js'
 
 const ChatC = () => {
 
     // context
     const { state } = useContext(StoreContext)
     const { chatsState, setNewMessage, onScrollToTop } = useContext(ChatsContext)
-    console.log('chatsState', chatsState)
 
     // chat id
     const chatId = chatsState.activeChatId
@@ -29,8 +29,8 @@ const ChatC = () => {
             chat_id: chatId,
             user_id: state.user_id,
             content: message,
-            created_at: Date.now(),
-            updated_at: Date.now(),
+            created_at: DateTime.local().toISO(),
+            updated_at: DateTime.local().toISO(),
         }
 
         setNewMessage(newMessage, chatId, true)
@@ -56,7 +56,6 @@ const ChatC = () => {
     const members = room.members
 
     // isAdmin & isManager
-    console.log('room.members.find -> ', room.members.find(member => member.managed_by_user_id === state.user_id))
     const isAdmin = room.managed_by_user_id === state.user_id
     const isManager = room.created_by_user_id === state.user_id
 
