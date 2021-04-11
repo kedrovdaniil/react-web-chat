@@ -6,6 +6,11 @@
 	padding: 25px 30px;
 	border-radius: 20px;
 
+	h2 {
+		color: white;
+		margin: 0;
+	}
+
 	form {
 		display: grid;
 
@@ -38,5 +43,18 @@
 
 	span {
 		color: whitesmoke;
+	}
+
+	.successRegistration {
+		.center {
+			display: grid;
+			justify-items: center;
+			text-align: center;
+
+			svg {
+				height: 50px;
+				width: 50px;
+			}
+		}
 	}
 }

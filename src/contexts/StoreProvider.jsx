@@ -15,6 +15,7 @@ const StoreProvider = ({children}) => {
 		modalType: "info", // 'info', 'warn', 'error'
 		modalTitle: "",
 		modalAllowForClose: true,
+		isRegistrationComplete: false,
 
 		// user auth
 		user_id: null,
@@ -37,9 +38,14 @@ const StoreProvider = ({children}) => {
 	// 	name: null,
 	// 	avatarUrl: null,
     // })
+
+	// set registration is completed successfully
+	const setRegistrationIsComplete = () => {
+		setState(state => ({...state, isRegistrationComplete: true}))
+	}
     
     return (
-        <StoreContext.Provider value={{state, setState}}>
+        <StoreContext.Provider value={{state, setState, setRegistrationIsComplete}}>
             {children}
         </StoreContext.Provider>
     )

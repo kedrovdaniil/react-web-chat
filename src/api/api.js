@@ -27,7 +27,16 @@ export const AuthAPI = {
     },
     logout() {
         return instance.post('/logout').then(r => r.status)
-    }
+    },
+    register(name, email, password) {
+        const postData = new FormData()
+        postData.append('name', name)
+        postData.append('email', email)
+        postData.append('password', password)
+        postData.append('password_confirmation', password)
+
+        return instance.post('/register', postData).then(r => r.status)
+    },
 }
 
 export const ChatsAPI = {

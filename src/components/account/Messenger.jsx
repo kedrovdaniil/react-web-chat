@@ -12,6 +12,11 @@ import { ChatsContext } from '../../contexts/ChatsProvider';
 
 const Messenger = () => {
 
+	// check auth
+	useEffect(() => {
+		
+	})
+
 	// context
 	const { state } = useContext(StoreContext)
 	const { chatsState, setActiveChat } = useContext(ChatsContext)
@@ -23,6 +28,7 @@ const Messenger = () => {
 		setActiveChat(id)
 	}
 
+	// on press "escape" button set not active room
 	useEffect(() => {
 		const cancel = (e) => e.keyCode === 27 ? setActiveIdRoom(null) : null
 		document.addEventListener('keyup', cancel)

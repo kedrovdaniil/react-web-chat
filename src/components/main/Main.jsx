@@ -8,7 +8,7 @@ import Loader from '../loader/Loader';
 import { StoreContext } from '../../contexts/StoreProvider';
 
 const Main = () => {
-	const { state, setState } = useContext(StoreContext)
+	const { state, setState, setRegistrationIsComplete } = useContext(StoreContext)
 
 	useEffect(() => {
 		const fetchAuth = async () => {
@@ -82,7 +82,7 @@ const Main = () => {
 					) : (
 							<div className={s.login}>
 								<div className={s.row}>
-									<RegistrationForm onSubmitHandler={onSubmitHandler} />
+									<RegistrationForm isRegistrationComplete={state.isRegistrationComplete} setRegistrationIsComplete={setRegistrationIsComplete} onSubmitHandler={onSubmitHandler} />
 									<span>or login</span>
 									<LoginForm onSubmitHandler={onSubmitHandler} />
 								</div>
